@@ -1,11 +1,14 @@
 import Lottie from "lottie-react";
 import React, { useState } from "react";
 import registerLottie from "../../assets/lottie/register.json";
+import { useAuth } from "../../context/AuthProvider";
+import Swal from "sweetalert2";
 
 function Register() {
   const [errorMessage, setErrorMessage] = useState("");
+  const { createUserWithEmailPassword } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -22,6 +25,32 @@ function Register() {
       return;
     }
     setErrorMessage("");
+
+
+    //!registering  with react firebase hook
+    try {
+      await createUserWithEmailPassword(email, password);
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "New Account Created",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      // Clear the form after successful submission
+      form.reset();
+    } catch (error) {
+      console.error("Error creating user:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to create account",
+        text: error.message,
+        showConfirmButton: true,
+      });
+    }
   };
 
   return (
@@ -66,7 +95,7 @@ function Register() {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary">Register</button>
             </div>
           </form>
         </div>
