@@ -1,3 +1,4 @@
+import { Button } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -48,8 +49,9 @@ function Navbar() {
       </div>
       <div className="navbar-end gap-2">
         <Link to="/register">Register</Link>
-        <a className="btn">Button</a>
+        <Link to="/login" className="btn">Login</Link>
       </div>
+      
     </div>
   );
 }
