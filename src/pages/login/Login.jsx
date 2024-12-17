@@ -7,45 +7,85 @@ import Swal from "sweetalert2";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");
-  const { signInWithEmailAndPassword,user} = useAuth();
+  const { signInWithEmailAndPassword,error} = useAuth();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const email = form.email.value;
+  //   const password = form.password.value;
+  
+  //   setErrorMessage(""); // Clear error message before submission
+  
+  //   //! Logging in with react firebase hook
+  //   const [userCredential, error] = await signInWithEmailAndPassword(email, password);
+  
+  //   if (error) {
+  //     // Show error message when login fails
+  //     console.error("Error logging in:", error);
+  //     Swal.fire({
+  //       position: "top-end",
+  //       icon: "error",
+  //       title: "Login Failed",
+  //       text: error.message,
+  //       showConfirmButton: true,
+  //     });
+  //     return; // Exit early
+  //   }
+  
+  //   // Success message when login succeeds
+  //   Swal.fire({
+  //     position: "top-end",
+  //     icon: "success",
+  //     title: "Login Successful",
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  
+  //   // Clear the form after successful login
+  //   form.reset();
+  // };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-
+  
     setErrorMessage(""); // Clear error message before submission
-
-    //!logging in with react firebase hook
-    try {
-      await signInWithEmailAndPassword(email, password);
-      console.log(user)
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Login Successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-      // Clear the form after successful login
-      form.reset();
-    } catch (error) {
+  
+    //! Logging in with react firebase hook
+    const result = await signInWithEmailAndPassword(email, password);
+    console.log(result)
+  
+    if (!result) {
+      // Show error message when login fails
       console.error("Error logging in:", error);
       Swal.fire({
         position: "top-end",
         icon: "error",
         title: "Login Failed",
-        text: error.message,
         showConfirmButton: true,
       });
+      return; // Exit early
     }
+  
+    // Success message when login succeeds
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Login Successful",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  
+    // Clear the form after successful login
+    form.reset();
   };
+  
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-base-200 rounded-2xl">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="flex flex-col lg:flex-row items-center gap-8">
           {/* Animation Section */}
@@ -101,6 +141,7 @@ function Login() {
               </Button>
             </form>
           </Card>
+          
         </div>
       </div>
     </div>

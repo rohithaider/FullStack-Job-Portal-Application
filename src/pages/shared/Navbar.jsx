@@ -1,8 +1,12 @@
 import { Button, ButtonGroup } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 function Navbar() {
+  
+
+  const {user,signOut,} = useAuth();
   const links = (
     <>
       <li>
@@ -48,8 +52,10 @@ function Navbar() {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        <Link to="/register"><Button color="green">Register</Button></Link>
-        <Link to="/login"><Button color="blue">Login</Button></Link>
+        {user?<Button color="red" onClick={()=>signOut()}>Sign Out</Button>:<>
+          <Link to="/register"><Button color="green">Register</Button></Link>
+          <Link to="/login"><Button color="blue">Login</Button></Link></>}
+        
         
       </div>
       

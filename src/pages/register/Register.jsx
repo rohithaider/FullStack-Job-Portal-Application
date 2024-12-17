@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 function Register() {
   const [errorMessage, setErrorMessage] = useState("");
-  const { createUserWithEmailPassword } = useAuth();
+  const { createUserWithEmailPassword,signOut} = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +38,7 @@ function Register() {
         showConfirmButton: false,
         timer: 1500,
       });
+      signOut();
 
       // Clear the form after successful submission
       form.reset();
