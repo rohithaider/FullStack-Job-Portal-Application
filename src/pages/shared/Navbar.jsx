@@ -6,7 +6,7 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";  // Import NavLink here
 import { useAuth } from "../../context/AuthProvider";
 
 export default function StickyNavbar() {
@@ -31,9 +31,15 @@ export default function StickyNavbar() {
           color="blue-gray"
           className="p-1 font-normal"
         >
-          <a href="#" className="flex items-center hover:text-blue-600">
+          {/* Replace <a> with NavLink and handle active class through className */}
+          <NavLink
+            to={`/${item === "Home" ? "" : item.toLowerCase().replace(" ", "-")}`} // Create paths like /home, /account, etc.
+            className={({ isActive }) => 
+              `flex items-center ${isActive ? "text-blue-600" : "hover:text-blue-600"}`
+            }
+          >
             {item}
-          </a>
+          </NavLink>
         </Typography>
       ))}
     </ul>
@@ -46,7 +52,7 @@ export default function StickyNavbar() {
           {/* Stylish Curved Logo */}
           <Typography
             as="a"
-            href="#"
+            href="/" // Link to the home page when logo is clicked
             className="mr-4 cursor-pointer text-3xl font-bold tracking-wide text-blue-600"
             style={{
               fontFamily: "'Pacifico', cursive",
