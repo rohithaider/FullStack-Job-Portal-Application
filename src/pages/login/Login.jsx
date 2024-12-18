@@ -5,9 +5,12 @@ import { useAuth } from "../../context/AuthProvider";
 import { Input, Button, Typography, Card } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 
+
+
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const { signInWithEmailAndPassword,error} = useAuth();
+  const {signInWithGoogle,googleError} = useAuth();
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -56,7 +59,6 @@ function Login() {
   
     //! Logging in with react firebase hook
     const result = await signInWithEmailAndPassword(email, password);
-    console.log(result)
   
     if (!result) {
       // Show error message when login fails
@@ -82,10 +84,37 @@ function Login() {
     // Clear the form after successful login
     form.reset();
   };
+
+  const handleGoogle  = async()=>{
+
+    try {
+      const result = await signInWithGoogle();
+      if(result){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Google Login Failed",
+        text: googleError?.message || "An error occurred",
+        showConfirmButton: true,
+      });
+      
+    }
+    
+  }
   
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-base-200 rounded-2xl">
+    <div className="flex items-center justify-center min-h-screen bg-blue-gray-50 rounded-2xl">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="flex flex-col lg:flex-row items-center gap-8">
           {/* Animation Section */}
@@ -138,6 +167,9 @@ function Login() {
               </div>
               <Button type="submit" color="blue" fullWidth className="mt-4">
                 Login
+              </Button>
+              <Button onClick={handleGoogle} color="red" fullWidth className="mt-4 flex justify-center items-center gap-2">
+                Login With Google 
               </Button>
             </form>
           </Card>

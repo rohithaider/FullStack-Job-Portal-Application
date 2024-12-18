@@ -1,6 +1,6 @@
 import { auth } from "../firebase/firebase.init"
 import AuthContext from "./AuthContext"
-import { useAuthState, useSignInWithEmailAndPassword,useCreateUserWithEmailAndPassword, useSignOut} from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithEmailAndPassword,useCreateUserWithEmailAndPassword, useSignOut, useSignInWithGoogle} from "react-firebase-hooks/auth";
 import { useContext } from "react";
 
 
@@ -12,6 +12,7 @@ export const AuthProvider = ({children})=>{
     const [signInWithEmailAndPassword, , signInLoading, signInError] = useSignInWithEmailAndPassword(auth);
     const [createUserWithEmailPassword, userCreated, userCreationError] = useCreateUserWithEmailAndPassword(auth);
     const [signOut, signOutLoading, signOutError] = useSignOut(auth);
+    const [signInWithGoogle, googleUser, googleLoading, googleError] =useSignInWithGoogle(auth);
 
 
 
@@ -23,7 +24,8 @@ export const AuthProvider = ({children})=>{
         signInLoading,
         signInError,
         createUserWithEmailPassword,userCreated,userCreationError,
-        signOut
+        signOut,
+        signInWithGoogle,googleError
     }
 
 

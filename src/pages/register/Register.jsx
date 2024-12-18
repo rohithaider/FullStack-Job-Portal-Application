@@ -1,12 +1,13 @@
-import Lottie from "lottie-react";
 import React, { useState } from "react";
+import { Card, Input, Button, Typography, Alert } from "@material-tailwind/react";
+import Lottie from "lottie-react";
 import registerLottie from "../../assets/lottie/register.json";
 import { useAuth } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
 
 function Register() {
   const [errorMessage, setErrorMessage] = useState("");
-  const { createUserWithEmailPassword,signOut} = useAuth();
+  const { createUserWithEmailPassword, signOut } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +17,7 @@ function Register() {
 
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
-    //password validation
-
+    // Password validation
     if (!passwordRegex.test(password)) {
       setErrorMessage(
         "Password must be at least 6 characters long, include at least one uppercase letter, and one number."
@@ -26,8 +26,7 @@ function Register() {
     }
     setErrorMessage("");
 
-
-    //!registering  with react firebase hook
+    //! Registering with react firebase hook
     try {
       await createUserWithEmailPassword(email, password);
 
@@ -55,51 +54,73 @@ function Register() {
   };
 
   return (
-    <div className="hero bg-base-200 min-h-screen rounded-3xl">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left lg:w-5/12">
-          <Lottie animationData={registerLottie}></Lottie>
+    <div className="flex items-center justify-center min-h-screen bg-blue-gray-50 p-4 rounded-2xl mt-1">
+      <div className="flex flex-col lg:flex-row w-full max-w-5xl items-center gap-10">
+        {/* Lottie Animation Section */}
+        <div className="w-full lg:w-1/2">
+          <Lottie animationData={registerLottie} />
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <h1 className="text-5xl font-bold text-center mt-4">Register now!</h1>
-          <form onSubmit={handleSubmit} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
+
+        {/* Form Section */}
+        <Card shadow={true} className="p-8 w-full max-w-sm">
+          <Typography variant="h3" color="blue-gray" className="text-center mb-6">
+            Register Now!
+          </Typography>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email Input */}
+            <div>
+              <Typography variant="small" color="blue-gray" className="mb-1">
+                Email
+              </Typography>
+              <Input
                 name="email"
                 type="email"
-                placeholder="email"
-                className="input input-bordered"
+                placeholder="Enter your email"
+                color="blue"
+                size="lg"
                 required
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
+
+            {/* Password Input */}
+            <div>
+              <Typography variant="small" color="blue-gray" className="mb-1">
+                Password
+              </Typography>
+              <Input
                 name="password"
                 type="password"
-                placeholder="password"
-                className="input input-bordered"
+                placeholder="Enter your password"
+                color="blue"
+                size="lg"
                 required
               />
               {errorMessage && (
-                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+                <Alert color="red" className="mt-2">
+                  {errorMessage}
+                </Alert>
               )}
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
             </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+
+            {/* Forgot Password Link */}
+            <div className="text-right">
+              <Typography
+                as="a"
+                href="#"
+                variant="small"
+                color="blue"
+                className="hover:underline"
+              >
+                Forgot password?
+              </Typography>
             </div>
+
+            {/* Submit Button */}
+            <Button type="submit" fullWidth color="blue" size="lg" ripple={true}>
+              Register
+            </Button>
           </form>
-        </div>
+        </Card>
       </div>
     </div>
   );
