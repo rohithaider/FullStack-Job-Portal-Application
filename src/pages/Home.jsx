@@ -40,21 +40,50 @@ function Home() {
             Post a Job
           </a>
         </div>
-        <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
+        <div className="hidden lg:mt-0 lg:col-span-5 lg:flex flex-col items-center relative">
           <motion.img
-            animate={{ y:[-50,10,-50] }}
-            transition={{ duration: 5, repeat:Infinity}}
+            animate={{ y: [-50, 10, -50] }}
+            transition={{ duration: 5, repeat: Infinity }}
             src={Happy1}
             alt="mockup"
-            className="w-48 rounded-t-3xl rounded-br-3xl border-l-4 border-b-4 border-blue-400 object-cover "
+            className="w-48 rounded-t-3xl rounded-br-3xl border-l-4 border-b-4 border-blue-400 object-cover mb-4"
           />
+          
+          {/* Motion Block of Squares */}
+          <motion.div
+            className="grid grid-cols-4 gap-2  absolute bottom-0 left-0"
+            animate={{ y: [-70, 0, -70] }}  // Same motion as the image
+            transition={{ duration: 5, repeat: Infinity }}
+          >
+            {/* Create 16 small squares */}
+            {Array.from({ length: 16 }).map((_, index) => (
+              <div
+                key={index}
+                className="w-4 h-4 bg-blue-400 border border-dotted"
+              />
+            ))}
+          </motion.div>
+          
           <motion.img
-            animate={{ x:[50,100,50] }}
-            transition={{delay:2.5, duration: 5, repeat:Infinity }}
+            animate={{ x: [50, 100, 50] }}
+            transition={{ duration: 5, repeat: Infinity }}
             src={Happy2}
             alt="mockup"
             className="w-48 rounded-t-3xl rounded-br-3xl border-l-4 border-b-4 border-blue-400 object-cover"
           />
+           <motion.div
+            className="grid grid-cols-4 gap-2  absolute bottom-0 left-0"
+            animate={{ x: [50, 100, 50] }}  // Same motion as the image
+            transition={{ delay:2.5,duration: 5, repeat: Infinity }}
+          >
+            {/* Create 16 small squares */}
+            {Array.from({ length: 16 }).map((_, index) => (
+              <div
+                key={index}
+                className="w-4 h-4 bg-blue-400 border border-dotted"
+              />
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
