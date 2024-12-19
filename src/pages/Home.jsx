@@ -2,10 +2,23 @@ import React from "react";
 import Happy1 from "../../src/assets/happy1.jpg";
 import Happy2 from "../../src/assets/happy2.jpg";
 import { motion } from "motion/react";
+import { useEffect,useState } from "react";
+import JobCard from "../cards/JobCard";
 
 function Home() {
+  const [jobs,setJobs] = useState([])
+
+  //!fetching api
+  useEffect(() => {
+    fetch("http://localhost:3000/jobs")
+    .then(res=>res.json())
+    .then(data=>setJobs(data))
+    
+  }, [])
+  
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <div>
+      <section className="bg-white dark:bg-gray-900">
       <div className="grid max-w-screen-2xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-7">
           <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
@@ -87,6 +100,14 @@ function Home() {
         </div>
       </div>
     </section>
+    <section className="mt-8">
+      <h1 className="text-center text-3xl">View Latest Jobs</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+        {jobs.map(job=><JobCard key={job._id} job={job}></JobCard>)}
+      </div>
+
+    </section>
+    </div>
   );
 }
 
