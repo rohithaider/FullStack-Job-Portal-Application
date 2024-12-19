@@ -101,7 +101,8 @@ function Home() {
       </div>
     </section>
     <section className="mt-8">
-      <h1 className="text-center text-3xl">View Latest Jobs</h1>
+      <h1  className="text-4xl text-blue-600 text-center my-6"
+        style={{ fontFamily: "Pacifico, cursive" }}>View Latest Jobs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
         {jobs.map(job=><JobCard key={job._id} job={job}></JobCard>)}
       </div>
